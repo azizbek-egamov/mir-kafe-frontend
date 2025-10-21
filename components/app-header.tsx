@@ -11,7 +11,7 @@ export default function AppHeader() {
         </div>
 
         <h1 className="text-7xl md:text-8xl lg:text-9xl font-bold text-center mb-4 tracking-tight font-serif bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent animate-fade-in-up">
-          MIR KAFE
+          MIR RESTAURANT
         </h1>
         <div className="flex items-center justify-center animate-slide-in-left">
           <div className="flex gap-2">
