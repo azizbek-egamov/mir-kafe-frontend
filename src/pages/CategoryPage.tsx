@@ -118,7 +118,7 @@ export default function CategoryPage() {
 
   if (loading) {
     return (
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '80vh', backgroundColor: 'var(--background)' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '80vh', backgroundColor: 'transparent' }}>
         <LoadingSpinner />
       </div>
     )
@@ -148,7 +148,7 @@ export default function CategoryPage() {
   }
 
   return (
-    <div style={{ padding: '1rem 1rem 8rem', backgroundColor: 'var(--background)', minHeight: '100vh' }}>
+    <div style={{ padding: '1rem 1rem 8rem', backgroundColor: 'transparent', minHeight: '100vh' }}>
       {/* Categories Nav */}
       <div style={{ maxWidth: '80rem', margin: '0 auto 1rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>

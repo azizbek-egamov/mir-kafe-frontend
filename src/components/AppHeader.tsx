@@ -6,7 +6,7 @@ export default function AppHeader() {
 
   return (
     <header style={{
-      backgroundColor: 'var(--background)',
+      backgroundColor: 'transparent',
       paddingTop: '2rem',
       paddingBottom: '1rem',
       paddingLeft: '1rem',
@@ -84,11 +84,11 @@ export default function AppHeader() {
                 }}
                 onMouseEnter={e => {
                   (e.currentTarget as HTMLDivElement).style.backgroundColor = 'rgba(var(--primary-rgb, 139 0 0) / 0.1)'
-                  ;(e.currentTarget as HTMLDivElement).style.transform = 'scale(1.1)'
+                    ; (e.currentTarget as HTMLDivElement).style.transform = 'scale(1.1)'
                 }}
                 onMouseLeave={e => {
                   (e.currentTarget as HTMLDivElement).style.backgroundColor = 'transparent'
-                  ;(e.currentTarget as HTMLDivElement).style.transform = 'scale(1)'
+                    ; (e.currentTarget as HTMLDivElement).style.transform = 'scale(1)'
                 }}
               >
                 <span style={{ fontWeight: 700, fontSize: '1.125rem', color: 'var(--primary)' }}>
