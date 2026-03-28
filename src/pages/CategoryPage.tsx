@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import MenuItem from '../components/MenuItem'
+import LoadingSpinner from '../components/LoadingSpinner'
 
 interface ApiProduct {
   id: number
@@ -118,7 +119,7 @@ export default function CategoryPage() {
   if (loading) {
     return (
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '80vh', backgroundColor: 'var(--background)' }}>
-        <div style={{ color: 'var(--muted-foreground)' }}>Yuklanmoqda…</div>
+        <LoadingSpinner />
       </div>
     )
   }

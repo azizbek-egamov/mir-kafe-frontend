@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import CategoryCard from '../components/CategoryCard'
+import LoadingSpinner from '../components/LoadingSpinner'
 
 interface ApiProduct {
   id: number
@@ -98,7 +99,7 @@ export default function HomePage() {
   if (loading) {
     return (
       <section style={{ padding: '1rem', minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ color: 'var(--muted-foreground)' }}>Yuklanmoqda…</div>
+        <LoadingSpinner />
       </section>
     )
   }
