@@ -6,7 +6,7 @@ export default function AppHeader() {
 
   return (
     <header style={{
-      backgroundColor: 'transparent',
+      backgroundColor: 'var(--background)',
       paddingTop: '2rem',
       paddingBottom: '1rem',
       paddingLeft: '1rem',

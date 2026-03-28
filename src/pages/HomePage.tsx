@@ -98,7 +98,14 @@ export default function HomePage() {
 
   if (loading) {
     return (
-      <section style={{ padding: '1rem', minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'transparent' }}>
+      <section style={{
+        padding: '1rem',
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'var(--background)'
+      }}>
         <LoadingSpinner />
       </section>
     )
@@ -121,7 +128,7 @@ export default function HomePage() {
   }
 
   return (
-    <section style={{ padding: '0.5rem 1rem 7rem', backgroundColor: 'transparent', minHeight: '100vh' }}>
+    <section style={{ padding: '0.5rem 1rem 7rem', backgroundColor: 'var(--background)', minHeight: '100vh' }}>
       <div style={{ maxWidth: '80rem', margin: '0 auto' }}>
         <div style={{
           display: 'grid',

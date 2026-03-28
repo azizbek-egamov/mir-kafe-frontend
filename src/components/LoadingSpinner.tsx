@@ -2,7 +2,7 @@ import { Loader2 } from 'lucide-react'
 
 export default function LoadingSpinner() {
   return (
-    <div className="flex flex-col items-center justify-center gap-4 animate-pulse">
+    <div className="flex flex-col items-center justify-center gap-4 animate-pulse" style={{ backgroundColor: 'var(--background)', width: '100%', height: '100%' }}>
       <div className="relative">
         <Loader2 className="w-12 h-12 text-primary animate-spin" strokeWidth={1.5} />
         <div className="absolute inset-0 blur-xl bg-primary/20 rounded-full animate-glow" />
@@ -10,7 +10,7 @@ export default function LoadingSpinner() {
       <p className="text-xl font-medium tracking-wider text-foreground/80 animate-fade-in-up">
         Yuklanmoqda...
       </p>
-      
+
       <style>{`
         @keyframes spin {
           from { transform: rotate(0deg); }
