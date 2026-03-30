@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import ImageLightbox from './ImageLightbox'
 
 interface MenuItemProps {
   name: string
@@ -29,6 +30,7 @@ function formatSomPrice(value: string | number): string {
 
 export default function MenuItem({ name, description, price, image, index }: MenuItemProps) {
   const [isHovered, setIsHovered] = useState(false)
+  const [showLightbox, setShowLightbox] = useState(false)
 
   return (
     <div
@@ -51,7 +53,9 @@ export default function MenuItem({ name, description, price, image, index }: Men
       }}
     >
       {/* Image */}
-      <div style={{ position: 'relative', width: '100%', aspectRatio: '1/1', overflow: 'hidden', backgroundColor: 'var(--muted)', borderRadius: 'var(--radius) var(--radius) 0 0' }}>
+      <div
+        onClick={() => setShowLightbox(true)}
+        style={{ position: 'relative', width: '100%', aspectRatio: '1/1', overflow: 'hidden', backgroundColor: 'var(--muted)', borderRadius: 'var(--radius) var(--radius) 0 0' }}>
         <div style={{ position: 'absolute', inset: 0, transition: 'transform 0.7s', transform: isHovered ? 'scale(1.1)' : 'scale(1)' }}>
           <img
             src={image || '/placeholder.svg'}
@@ -117,6 +121,14 @@ export default function MenuItem({ name, description, price, image, index }: Men
           {formatSomPrice(price)}
         </div>
       </div>
+
+      {showLightbox && image && (
+        <ImageLightbox
+          src={image}
+          alt={name}
+          onClose={() => setShowLightbox(false)}
+        />
+      )}
     </div>
   )
 }
