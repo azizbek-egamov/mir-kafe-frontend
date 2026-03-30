@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { X, ZoomIn, ZoomOut } from 'lucide-react'
+import { X } from 'lucide-react'
 
 interface ImageLightboxProps {
     src: string
@@ -15,17 +15,15 @@ export default function ImageLightbox({ src, alt, onClose }: ImageLightboxProps)
     const containerRef = useRef<HTMLDivElement>(null)
     const imageRef = useRef<HTMLImageElement>(null)
 
-    // Pinch to zoom state
     const [initialDistance, setInitialDistance] = useState<number | null>(null)
     const [lastScale, setLastScale] = useState(1)
 
-    // Close on Escape key
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === 'Escape') onClose()
         }
         window.addEventListener('keydown', handleKeyDown)
-        document.body.style.overflow = 'hidden' // Prevent scrolling
+        document.body.style.overflow = 'hidden'
         return () => {
             window.removeEventListener('keydown', handleKeyDown)
             document.body.style.overflow = ''
@@ -50,16 +48,11 @@ export default function ImageLightbox({ src, alt, onClose }: ImageLightboxProps)
 
     const handleMouseMove = (e: React.MouseEvent) => {
         if (!isDragging || scale <= 1) return
-        const newX = e.clientX - dragStart.x
-        const newY = e.clientY - dragStart.y
-        setPosition({ x: newX, y: newY })
+        setPosition({ x: e.clientX - dragStart.x, y: e.clientY - dragStart.y })
     }
 
-    const handleMouseUp = () => {
-        setIsDragging(false)
-    }
+    const handleMouseUp = () => setIsDragging(false)
 
-    // Touch handlers for pinch to zoom and pan
     const handleTouchStart = (e: React.TouchEvent) => {
         if (e.touches.length === 2) {
             const distance = Math.hypot(
@@ -87,9 +80,10 @@ export default function ImageLightbox({ src, alt, onClose }: ImageLightboxProps)
             setScale(newScale)
             if (newScale === 1) setPosition({ x: 0, y: 0 })
         } else if (e.touches.length === 1 && isDragging && scale > 1) {
-            const newX = e.touches[0].clientX - dragStart.x
-            const newY = e.touches[0].clientY - dragStart.y
-            setPosition({ x: newX, y: newY })
+            setPosition({
+                x: e.touches[0].clientX - dragStart.x,
+                y: e.touches[0].clientY - dragStart.y
+            })
         }
     }
 
@@ -101,15 +95,16 @@ export default function ImageLightbox({ src, alt, onClose }: ImageLightboxProps)
     return (
         <div
             ref={containerRef}
+            className="lightbox-fade-in"
             style={{
                 position: 'fixed',
                 inset: 0,
                 zIndex: 9999,
-                backgroundColor: 'rgba(0, 0, 0, 0.95)',
+                backgroundColor: 'rgba(0, 0, 0, 0.9)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                backdropFilter: 'blur(10px)',
+                backdropFilter: 'blur(15px)',
                 cursor: scale > 1 ? 'grab' : 'auto',
                 touchAction: 'none',
             }}
@@ -120,39 +115,33 @@ export default function ImageLightbox({ src, alt, onClose }: ImageLightboxProps)
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
         >
-            {/* Controls */}
-            <div style={{
-                position: 'absolute',
-                top: '1.5rem',
-                right: '1.5rem',
-                display: 'flex',
-                gap: '1rem',
-                zIndex: 10000,
-            }}>
-                <button
-                    onClick={() => setScale(prev => Math.min(prev + 0.5, 5))}
-                    style={controlBtnStyle}
-                    aria-label="Zoom In"
-                >
-                    <ZoomIn size={24} />
-                </button>
-                <button
-                    onClick={() => { setScale(1); setPosition({ x: 0, y: 0 }) }}
-                    style={controlBtnStyle}
-                    aria-label="Reset Zoom"
-                >
-                    <ZoomOut size={24} />
-                </button>
-                <button
-                    onClick={onClose}
-                    style={controlBtnStyle}
-                    aria-label="Close"
-                >
-                    <X size={24} />
-                </button>
-            </div>
+            <button
+                onClick={onClose}
+                style={{
+                    position: 'absolute',
+                    top: '2rem',
+                    right: '2rem',
+                    background: 'rgba(255, 255, 255, 0.1)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    color: 'white',
+                    width: '3.5rem',
+                    height: '3.5rem',
+                    borderRadius: '9999px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    cursor: 'pointer',
+                    backdropFilter: 'blur(8px)',
+                    transition: 'all 0.3s',
+                    zIndex: 10000,
+                }}
+                onMouseEnter={e => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.2)'}
+                onMouseLeave={e => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)'}
+                aria-label="Close"
+            >
+                <X size={28} />
+            </button>
 
-            {/* Image Container */}
             <div
                 onMouseDown={handleMouseDown}
                 onTouchStart={handleTouchStart}
@@ -172,13 +161,15 @@ export default function ImageLightbox({ src, alt, onClose }: ImageLightboxProps)
                     alt={alt}
                     draggable={false}
                     style={{
-                        maxWidth: '95%',
-                        maxHeight: '95%',
+                        maxWidth: '90%',
+                        maxHeight: '90%',
                         objectFit: 'contain',
                         transform: `translate(${position.x}px, ${position.y}px) scale(${scale})`,
-                        transition: isDragging ? 'none' : 'transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)',
+                        transition: isDragging ? 'none' : 'transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)',
                         userSelect: 'none',
                         WebkitUserSelect: 'none',
+                        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
+                        borderRadius: '0.5rem',
                     }}
                 />
             </div>
@@ -189,24 +180,9 @@ export default function ImageLightbox({ src, alt, onClose }: ImageLightboxProps)
           to { opacity: 1; }
         }
         .lightbox-fade-in {
-          animation: fadeIn 0.3s ease-out forwards;
+          animation: fadeIn 0.4s ease-out forwards;
         }
       `}</style>
         </div>
     )
-}
-
-const controlBtnStyle: React.CSSProperties = {
-    background: 'rgba(255, 255, 255, 0.1)',
-    border: '1px solid rgba(255, 255, 255, 0.2)',
-    color: 'white',
-    width: '3rem',
-    height: '3rem',
-    borderRadius: '9999px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    cursor: 'pointer',
-    backdropFilter: 'blur(4px)',
-    transition: 'all 0.2s',
 }
